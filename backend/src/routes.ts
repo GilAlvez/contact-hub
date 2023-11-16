@@ -1,9 +1,9 @@
 import { Router } from "express";
 
+import ContactController from "./controllers/ContactController";
+
 const router = Router();
 
-router.get("/", (request, response) => {
-  response.send("Hello World");
-});
+router.get("/", ContactController.index);
 
 export default router;
