@@ -60,6 +60,15 @@
         "prefix": [
           "I"
         ]
+      },
+      {
+        "selector": "typeLike",
+        "format": [
+          "PascalCase"
+        ],
+        "prefix": [
+          "T"
+        ]
       }
     ]
   }
