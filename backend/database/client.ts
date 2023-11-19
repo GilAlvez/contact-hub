@@ -10,12 +10,27 @@ const client = new Client({
 
 client.connect();
 
-client.query("");
-
-export default async function query<T = unknown>(
-  instruction: string,
+async function query<T = unknown>(
+  strings: TemplateStringsArray,
+  ...values: any[]
 ): Promise<T[]> {
-  const { rows } = await client.query(instruction);
+  let text = "";
+
+  // Converts each value to dollar assign and value index
+  // e.g. Template string `VALUES(${name}, ${email})` >>>> To string "VALUES($1, $2)"
+  for (let index = 0; index < strings.length; index += 1) {
+    text += strings[index];
+    if (index < values.length) {
+      text += `$${index + 1}`;
+    }
+  }
+
+  const { rows } = await client.query(text, values);
 
   return rows;
 }
+
+export default {
+  client,
+  query,
+};
