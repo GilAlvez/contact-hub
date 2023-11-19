@@ -5,6 +5,6 @@
  *
  * The 'u' flag enables Unicode support, necessary for \p{L} to work properly.
  */
-const onlyLettersRegex = /^\p{L}+$/u;
+const onlyLettersRegex = /^[\p{L} ]+$/u;
 
 export default onlyLettersRegex;
