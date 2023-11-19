@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import onlyLettersRegex from "../utils/onlyLettersRegex";
+import ONLY_LETTERS_REGEX from "../utils/onlyLettersRegex";
 
 export const ContactModel = z.object({
   id: z.string().uuid(),
@@ -9,7 +9,7 @@ export const ContactModel = z.object({
     .trim()
     .min(3, "Contact name must have min 3 characters")
     .max(200, "Contact name must have max 200 characters")
-    .regex(onlyLettersRegex, {
+    .regex(ONLY_LETTERS_REGEX, {
       message:
         "Contact name must contain only letter characters from any language (e.g: Arabic, Kanji...) and no numbers or special symbols.",
     }),
@@ -20,4 +20,4 @@ export const ContactModel = z.object({
     .max(14, "Contact phone must have max 14 digits"),
 });
 
-export type TContactModel = z.infer<typeof ContactModel>;
+export type Contact = z.infer<typeof ContactModel>;
