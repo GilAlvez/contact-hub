@@ -23,6 +23,8 @@
     }
   },
   "rules": {
+    "no-console": "off",
+    "class-methods-use-this": "off",
     "prettier/prettier": "error",
     "import/extensions": [
       "error",
@@ -59,15 +61,6 @@
         ],
         "prefix": [
           "I"
-        ]
-      },
-      {
-        "selector": "typeLike",
-        "format": [
-          "PascalCase"
-        ],
-        "prefix": [
-          "T"
         ]
       }
     ]
