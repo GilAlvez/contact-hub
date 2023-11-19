@@ -10,13 +10,13 @@ let contacts: Contact[] = [
     id: crypto.randomUUID(),
     name: "Fulano",
     email: "fulano@mail.com",
-    phone: 123123123,
+    phone: "123123123",
   },
 ];
 
 class ContactRepository implements IContactRepository {
   async findAll() {
-    return contacts;
+    return contacts ?? [];
   }
 
   async findById(id: string) {
@@ -44,6 +44,12 @@ class ContactRepository implements IContactRepository {
     };
 
     contacts.push(newContact);
+  }
+
+  async update(contact: Contact) {
+    contacts = contacts.map((item) =>
+      item.id === contact.id ? contact : item,
+    );
   }
 
   async delete(id: string) {
