@@ -57,7 +57,7 @@
         ],
         "alphabetize": {
           "order": "asc",
-          "caseSensitive": true
+          "caseInsensitive": true
         },
         "newlines-between": "always"
       }
@@ -69,10 +69,9 @@
         "format": [
           "PascalCase"
         ],
-        "custom": {
-          "regex": "I[A-Z]",
-          "match": true
-        }
+        "prefix": [
+          "I"
+        ]
       }
     ],
     "react-refresh/only-export-components": [
