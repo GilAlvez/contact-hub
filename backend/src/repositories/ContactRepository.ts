@@ -1,5 +1,6 @@
 import crypto from "crypto";
 
+import db from "../../database/client";
 import { Contact } from "../models/ContactModel";
 import { NewContact } from "../models/NewContactModel";
 
@@ -16,34 +17,37 @@ let contacts: Contact[] = [
 
 class ContactRepository implements IContactRepository {
   async findAll() {
-    return contacts ?? [];
+    const rows = await db.query<Contact>`
+      SELECT * FROM contacts
+    `;
+
+    return rows;
   }
 
   async findById(id: string) {
-    const contact = contacts.find((item) => item.id === id);
+    const [row] = await db.query<Contact>`
+      SELECT * FROM contacts WHERE id = ${id}
+    `;
 
-    if (contact) return contact;
-
-    return null;
+    return row;
   }
 
   async findByEmail(email: string) {
-    const contact = contacts.find((item) => item.email === email);
+    const [row] = await db.query<Contact>`
+      SELECT * FROM contacts WHERE email = ${email}
+    `;
 
-    if (contact) return contact;
-
-    return null;
+    return row;
   }
 
-  async create({ email, name, phone }: NewContact) {
-    const newContact: Contact = {
-      id: crypto.randomUUID(),
-      name,
-      email,
-      phone,
-    };
+  async create({ name, email, phone }: NewContact) {
+    const [row] = await db.query<Contact>`
+      INSERT INTO contacts(name, email, phone)
+      VALUES(${name}, ${email}, ${phone})
+      RETURNING *
+    `;
 
-    contacts.push(newContact);
+    return row;
   }
 
   async update(contact: Contact) {

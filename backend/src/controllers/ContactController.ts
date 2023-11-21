@@ -54,8 +54,8 @@ export default abstract class ContactController {
     }
 
     // Success
-    await ContactRepository.create({ name, email, phone });
-    res.sendStatus(204);
+    const contact = await ContactRepository.create({ name, email, phone });
+    res.json(contact);
   }
 
   static async update(req: Request, res: Response): Promise<void> {
