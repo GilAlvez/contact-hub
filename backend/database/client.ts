@@ -18,14 +18,23 @@ async function query<T = unknown>(
 
   // Converts each value to dollar assign and value index
   // e.g. Template string `VALUES(${name}, ${email})` >>>> To string "VALUES($1, $2)"
+  // Ignores objects as values, putting raw values directly
   for (let index = 0; index < strings.length; index += 1) {
     text += strings[index];
     if (index < values.length) {
-      text += `$${index + 1}`;
+      if (typeof values[index] === "object" && values[index].raw) {
+        text += values[index].raw;
+      } else {
+        text += `$${index + 1}`;
+      }
     }
   }
 
-  const { rows } = await client.query(text, values);
+  const filteredValues = values.filter(
+    (value) => !(typeof value === "object" && value.raw),
+  );
+
+  const { rows } = await client.query(text, filteredValues);
 
   return rows;
 }
