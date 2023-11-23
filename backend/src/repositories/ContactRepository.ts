@@ -1,24 +1,16 @@
-import crypto from "crypto";
-
 import db from "../../database/client";
 import { Contact } from "../models/ContactModel";
 import { NewContact } from "../models/NewContactModel";
 
-import { IContactRepository } from "./IContactRerpository";
-
-let contacts: Contact[] = [
-  {
-    id: crypto.randomUUID(),
-    name: "Fulano",
-    email: "fulano@mail.com",
-    phone: "123123123",
-  },
-];
+import { FindAllQueryParams, IContactRepository } from "./IContactRerpository";
 
 class ContactRepository implements IContactRepository {
-  async findAll() {
+  async findAll({ orderBy }: FindAllQueryParams) {
+    const direction =
+      orderBy?.toUpperCase() === "DESC" ? { raw: "DESC" } : { raw: "ASC" };
+
     const rows = await db.query<Contact>`
-      SELECT * FROM contacts
+      SELECT * FROM contacts ORDER BY name ${direction}
     `;
 
     return rows;
@@ -50,14 +42,20 @@ class ContactRepository implements IContactRepository {
     return row;
   }
 
-  async update(contact: Contact) {
-    contacts = contacts.map((item) =>
-      item.id === contact.id ? contact : item,
-    );
+  async update({ id, name, email, phone }: Contact) {
+    const [row] = await db.query`
+      UPDATE contacts
+      SET name = ${name}, email = ${email}, phone = ${phone}
+      WHERE id = ${id}
+    `;
+
+    return row;
   }
 
   async delete(id: string) {
-    contacts = contacts.filter((contact) => contact.id !== id);
+    await db.query`
+      DELETE FROM contacts WHERE id = ${id}
+    `;
   }
 }
 
