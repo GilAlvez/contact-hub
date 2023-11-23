@@ -7,7 +7,10 @@ import ContactRepository from "../repositories/ContactRepository";
 export default abstract class ContactController {
   static async index(req: Request, res: Response): Promise<void> {
     // Data
-    const contacts = await ContactRepository.findAll();
+    const { orderBy } = req.query;
+    const contacts = await ContactRepository.findAll({
+      orderBy: String(orderBy),
+    });
 
     // Success
     res.json(contacts);
