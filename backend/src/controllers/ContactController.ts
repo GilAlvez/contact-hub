@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { ContactModel } from "../models/ContactModel";
 import { NewContactModel } from "../models/NewContactModel";
 import ContactRepository from "../repositories/ContactRepository";
+import validateModel from "../utils/validateModel";
 
 export default abstract class ContactController {
   static async index(req: Request, res: Response): Promise<void> {
@@ -36,16 +37,10 @@ export default abstract class ContactController {
     const { name, email, phone } = req.body;
 
     // Validation
-    const validation = NewContactModel.safeParse({ name, email, phone });
+    const error = validateModel(NewContactModel, { name, email, phone });
 
-    if (!validation.success) {
-      res.status(400).json({
-        error: "Invalid properties",
-        details: validation.error.issues.map((issue) => ({
-          field: issue.path,
-          message: issue.message,
-        })),
-      });
+    if (error) {
+      res.status(400).json(error);
       return;
     }
 
@@ -67,16 +62,10 @@ export default abstract class ContactController {
     const { name, email, phone } = req.body;
 
     // Validation
-    const validation = ContactModel.safeParse({ id, name, email, phone });
+    const error = validateModel(ContactModel, { id, name, email, phone });
 
-    if (!validation.success) {
-      res.status(400).json({
-        error: "Invalid properties",
-        details: validation.error.issues.map((issue) => ({
-          field: issue.path,
-          message: issue.message,
-        })),
-      });
+    if (error) {
+      res.status(400).json(error);
       return;
     }
 
