@@ -2,10 +2,13 @@ import db from "../../database/client";
 import { Contact } from "../models/ContactModel";
 import { NewContact } from "../models/NewContactModel";
 
-import { FindAllQueryParams, IContactRepository } from "./IContactRerpository";
+import {
+  ContactFindAllQueryParams,
+  IContactRepository,
+} from "./IContactRepository";
 
 class ContactRepository implements IContactRepository {
-  async findAll({ orderBy }: FindAllQueryParams) {
+  async findAll({ orderBy }: ContactFindAllQueryParams) {
     const direction =
       orderBy?.toUpperCase() === "DESC" ? { raw: "DESC" } : { raw: "ASC" };
 
