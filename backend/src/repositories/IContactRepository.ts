@@ -9,6 +9,6 @@ export interface IContactRepository {
   findById: (id: string) => Promise<Contact | null>;
   findByEmail: (email: string) => Promise<Contact | null>;
   create: (newContact: NewContact) => Promise<Contact>;
-  update: (contact: Contact) => void;
-  delete: (id: string) => void;
+  update: (contact: Contact) => Promise<void>;
+  delete: (id: string) => Promise<void>;
 }

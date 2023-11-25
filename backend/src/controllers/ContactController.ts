@@ -108,9 +108,9 @@ export default abstract class ContactController {
     // Data
     const { id } = req.params;
 
+    // Validation
     const contact = await ContactRepository.findById(id);
 
-    // Validation
     if (!contact) {
       res.status(404).json({ error: "Not found" });
       return;

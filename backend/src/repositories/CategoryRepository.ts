@@ -37,14 +37,12 @@ class CategoryRepository implements ICategoryRepository {
     return row;
   }
 
-  async update({ id, name }: Partial<Category>) {
-    const [row] = await db.query`
+  async update(id: string, { name }: Partial<Category>) {
+    await db.query`
       UPDATE categories
       SET name = ${name}
       WHERE id = ${id}
     `;
-
-    return row;
   }
 
   async delete(id: string) {

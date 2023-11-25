@@ -9,6 +9,6 @@ export interface ICategoryRepository {
   findAll: (query: CategoryFindAllQueryParams) => Promise<Category[]>;
   findById: (id: string) => Promise<Category | null>;
   create: (newCategory: NewCategory) => Promise<Category>;
-  update: (category: Partial<Category>) => void;
-  delete: (id: string) => void;
+  update: (id: string, newCategory: Partial<NewCategory>) => Promise<void>;
+  delete: (id: string) => Promise<void>;
 }
