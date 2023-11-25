@@ -13,7 +13,10 @@ class ContactRepository implements IContactRepository {
       orderBy?.toUpperCase() === "DESC" ? { raw: "DESC" } : { raw: "ASC" };
 
     const rows = await db.query<Contact>`
-      SELECT * FROM contacts ORDER BY name ${direction}
+      SELECT contacts.*, categories.name AS category_name
+      FROM contacts
+      LEFT JOIN categories ON categories.id = contacts.category_id
+      ORDER BY contacts.name ${direction}
     `;
 
     return rows;
@@ -21,7 +24,10 @@ class ContactRepository implements IContactRepository {
 
   async findById(id: string) {
     const [row] = await db.query<Contact>`
-      SELECT * FROM contacts WHERE id = ${id}
+      SELECT contact.*, categories.name AS category_name
+      FROM contacts
+      LEFT JOIN categories ON categories.id = contacts.category_id
+      WHERE contacts.id = ${id}
     `;
 
     return row;
@@ -46,13 +52,11 @@ class ContactRepository implements IContactRepository {
   }
 
   async update({ id, name, email, phone, category_id }: Contact) {
-    const [row] = await db.query`
+    await db.query`
       UPDATE contacts
       SET name = ${name}, email = ${email}, phone = ${phone}, category_id = ${category_id}
       WHERE id = ${id}
     `;
-
-    return row;
   }
 
   async delete(id: string) {
