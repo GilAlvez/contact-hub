@@ -19,6 +19,14 @@ class CategoryRepository implements ICategoryRepository {
     return rows;
   }
 
+  async findById(id: string) {
+    const [row] = await db.query<Category>`
+      SELECT * FROM categories WHERE id = ${id}
+    `;
+
+    return row;
+  }
+
   async create({ name }: NewCategory) {
     const [row] = await db.query<Category>`
       INSERT INTO categories(name)
@@ -27,6 +35,22 @@ class CategoryRepository implements ICategoryRepository {
     `;
 
     return row;
+  }
+
+  async update({ id, name }: Partial<Category>) {
+    const [row] = await db.query`
+      UPDATE categories
+      SET name = ${name}
+      WHERE id = ${id}
+    `;
+
+    return row;
+  }
+
+  async delete(id: string) {
+    await db.query`
+      DELETE FROM categories WHERE id = ${id}
+    `;
   }
 }
 
