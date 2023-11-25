@@ -34,10 +34,15 @@ export default abstract class ContactController {
 
   static async store(req: Request, res: Response): Promise<void> {
     // Data
-    const { name, email, phone } = req.body;
+    const { name, email, phone, category_id } = req.body;
 
     // Validation
-    const error = validateModel(NewContactModel, { name, email, phone });
+    const error = validateModel(NewContactModel, {
+      name,
+      email,
+      phone,
+      category_id,
+    });
 
     if (error) {
       res.status(400).json(error);
@@ -52,17 +57,28 @@ export default abstract class ContactController {
     }
 
     // Success
-    const contact = await ContactRepository.create({ name, email, phone });
+    const contact = await ContactRepository.create({
+      name,
+      email,
+      phone,
+      category_id,
+    });
     res.json(contact);
   }
 
   static async update(req: Request, res: Response): Promise<void> {
     // Data
     const { id } = req.params;
-    const { name, email, phone } = req.body;
+    const { name, email, phone, category_id } = req.body;
 
     // Validation
-    const error = validateModel(ContactModel, { id, name, email, phone });
+    const error = validateModel(ContactModel, {
+      id,
+      name,
+      email,
+      phone,
+      category_id,
+    });
 
     if (error) {
       res.status(400).json(error);
@@ -84,7 +100,7 @@ export default abstract class ContactController {
     }
 
     // Success
-    await ContactRepository.update({ id, name, email, phone });
+    await ContactRepository.update({ id, name, email, phone, category_id });
     res.sendStatus(204);
   }
 

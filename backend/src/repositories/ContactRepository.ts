@@ -35,20 +35,20 @@ class ContactRepository implements IContactRepository {
     return row;
   }
 
-  async create({ name, email, phone }: NewContact) {
+  async create({ name, email, phone, category_id }: NewContact) {
     const [row] = await db.query<Contact>`
-      INSERT INTO contacts(name, email, phone)
-      VALUES(${name}, ${email}, ${phone})
+      INSERT INTO contacts(name, email, phone, category_id)
+      VALUES(${name}, ${email}, ${phone} ${category_id})
       RETURNING *
     `;
 
     return row;
   }
 
-  async update({ id, name, email, phone }: Contact) {
+  async update({ id, name, email, phone, category_id }: Contact) {
     const [row] = await db.query`
       UPDATE contacts
-      SET name = ${name}, email = ${email}, phone = ${phone}
+      SET name = ${name}, email = ${email}, phone = ${phone}, category_id = ${category_id}
       WHERE id = ${id}
     `;
 
