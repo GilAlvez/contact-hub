@@ -1,59 +1,68 @@
-import crypto from "crypto";
-
+import db from "../../database/client";
 import { Contact } from "../models/ContactModel";
 import { NewContact } from "../models/NewContactModel";
 
-import { IContactRepository } from "./IContactRerpository";
-
-let contacts: Contact[] = [
-  {
-    id: crypto.randomUUID(),
-    name: "Fulano",
-    email: "fulano@mail.com",
-    phone: "123123123",
-  },
-];
+import {
+  ContactFindAllQueryParams,
+  IContactRepository,
+} from "./IContactRepository";
 
 class ContactRepository implements IContactRepository {
-  async findAll() {
-    return contacts ?? [];
+  async findAll({ orderBy }: ContactFindAllQueryParams) {
+    const direction =
+      orderBy?.toUpperCase() === "DESC" ? { raw: "DESC" } : { raw: "ASC" };
+
+    const rows = await db.query<Contact>`
+      SELECT contacts.*, categories.name AS category_name
+      FROM contacts
+      LEFT JOIN categories ON categories.id = contacts.category_id
+      ORDER BY contacts.name ${direction}
+    `;
+
+    return rows;
   }
 
   async findById(id: string) {
-    const contact = contacts.find((item) => item.id === id);
+    const [row] = await db.query<Contact>`
+      SELECT contact.*, categories.name AS category_name
+      FROM contacts
+      LEFT JOIN categories ON categories.id = contacts.category_id
+      WHERE contacts.id = ${id}
+    `;
 
-    if (contact) return contact;
-
-    return null;
+    return row;
   }
 
   async findByEmail(email: string) {
-    const contact = contacts.find((item) => item.email === email);
+    const [row] = await db.query<Contact>`
+      SELECT * FROM contacts WHERE email = ${email}
+    `;
 
-    if (contact) return contact;
-
-    return null;
+    return row;
   }
 
-  async create({ email, name, phone }: NewContact) {
-    const newContact: Contact = {
-      id: crypto.randomUUID(),
-      name,
-      email,
-      phone,
-    };
+  async create({ name, email, phone, category_id }: NewContact) {
+    const [row] = await db.query<Contact>`
+      INSERT INTO contacts(name, email, phone, category_id)
+      VALUES(${name}, ${email}, ${phone} ${category_id})
+      RETURNING *
+    `;
 
-    contacts.push(newContact);
+    return row;
   }
 
-  async update(contact: Contact) {
-    contacts = contacts.map((item) =>
-      item.id === contact.id ? contact : item,
-    );
+  async update({ id, name, email, phone, category_id }: Contact) {
+    await db.query`
+      UPDATE contacts
+      SET name = ${name}, email = ${email}, phone = ${phone}, category_id = ${category_id}
+      WHERE id = ${id}
+    `;
   }
 
   async delete(id: string) {
-    contacts = contacts.filter((contact) => contact.id !== id);
+    await db.query`
+      DELETE FROM contacts WHERE id = ${id}
+    `;
   }
 }
 

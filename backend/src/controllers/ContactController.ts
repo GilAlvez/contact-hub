@@ -3,11 +3,15 @@ import { Request, Response } from "express";
 import { ContactModel } from "../models/ContactModel";
 import { NewContactModel } from "../models/NewContactModel";
 import ContactRepository from "../repositories/ContactRepository";
+import validateModel from "../utils/validateModel";
 
 export default abstract class ContactController {
   static async index(req: Request, res: Response): Promise<void> {
     // Data
-    const contacts = await ContactRepository.findAll();
+    const { orderBy } = req.query;
+    const contacts = await ContactRepository.findAll({
+      orderBy: String(orderBy),
+    });
 
     // Success
     res.json(contacts);
@@ -30,19 +34,18 @@ export default abstract class ContactController {
 
   static async store(req: Request, res: Response): Promise<void> {
     // Data
-    const { name, email, phone } = req.body;
+    const { name, email, phone, category_id } = req.body;
 
     // Validation
-    const validation = NewContactModel.safeParse({ name, email, phone });
+    const error = validateModel(NewContactModel, {
+      name,
+      email,
+      phone,
+      category_id,
+    });
 
-    if (!validation.success) {
-      res.status(400).json({
-        error: "Invalid properties",
-        details: validation.error.issues.map((issue) => ({
-          field: issue.path,
-          message: issue.message,
-        })),
-      });
+    if (error) {
+      res.status(400).json(error);
       return;
     }
 
@@ -54,26 +57,31 @@ export default abstract class ContactController {
     }
 
     // Success
-    await ContactRepository.create({ name, email, phone });
-    res.sendStatus(204);
+    const contact = await ContactRepository.create({
+      name,
+      email,
+      phone,
+      category_id,
+    });
+    res.json(contact);
   }
 
   static async update(req: Request, res: Response): Promise<void> {
     // Data
     const { id } = req.params;
-    const { name, email, phone } = req.body;
+    const { name, email, phone, category_id } = req.body;
 
     // Validation
-    const validation = ContactModel.safeParse({ id, name, email, phone });
+    const error = validateModel(ContactModel, {
+      id,
+      name,
+      email,
+      phone,
+      category_id,
+    });
 
-    if (!validation.success) {
-      res.status(400).json({
-        error: "Invalid properties",
-        details: validation.error.issues.map((issue) => ({
-          field: issue.path,
-          message: issue.message,
-        })),
-      });
+    if (error) {
+      res.status(400).json(error);
       return;
     }
 
@@ -92,7 +100,7 @@ export default abstract class ContactController {
     }
 
     // Success
-    await ContactRepository.update({ id, name, email, phone });
+    await ContactRepository.update({ id, name, email, phone, category_id });
     res.sendStatus(204);
   }
 
@@ -100,9 +108,9 @@ export default abstract class ContactController {
     // Data
     const { id } = req.params;
 
+    // Validation
     const contact = await ContactRepository.findById(id);
 
-    // Validation
     if (!contact) {
       res.status(404).json({ error: "Not found" });
       return;

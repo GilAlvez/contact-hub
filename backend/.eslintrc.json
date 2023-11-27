@@ -24,8 +24,15 @@
   },
   "rules": {
     "no-console": "off",
+    "camelcase": "off",
     "class-methods-use-this": "off",
     "prettier/prettier": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "next"
+      }
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",
