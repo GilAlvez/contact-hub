@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@fontsource-variable/sora": "^5.0.15",
+    "@mui/icons-material": "^5.14.19",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
