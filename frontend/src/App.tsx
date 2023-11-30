@@ -1,5 +1,11 @@
+import PageLayout from "./components/PageLayout";
+
 function App() {
-  return <h2>Hello World</h2>;
+  return (
+    <PageLayout>
+      <h2>*Lista de Contatos*</h2>
+    </PageLayout>
+  );
 }
 
 export default App;
