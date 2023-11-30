@@ -35,8 +35,8 @@
     }
 
   html, body {
-    background: var(--colors-gray-50);
-    color: var(--colors-gray-950);
+    background: var(--colors-gray-100);
+    color: var(--colors-gray-900);
     font-size: 14px;
     font-family: Sora Variable, sans-serif;
     line-height: 1.25;

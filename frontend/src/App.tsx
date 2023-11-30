@@ -1,9 +1,12 @@
+import ContactsList from "./components/ContactsList";
 import PageLayout from "./components/PageLayout";
+import SearchField from "./components/SearchField";
 
 function App() {
   return (
     <PageLayout>
-      <h2>*Lista de Contatos*</h2>
+      <SearchField placeholder="Search contact..." />
+      <ContactsList />
     </PageLayout>
   );
 }
