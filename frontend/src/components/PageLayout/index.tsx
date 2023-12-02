@@ -1,7 +1,5 @@
 import { ReactNode } from "react";
 
-import Header from "../Header";
-
 import * as S from "./styles";
 
 type PageLayoutProps = {
@@ -9,12 +7,7 @@ type PageLayoutProps = {
 };
 
 function PageLayout({ children }: PageLayoutProps) {
-  return (
-    <S.PageLayout>
-      <Header />
-      {children}
-    </S.PageLayout>
-  );
+  return <S.PageLayout>{children}</S.PageLayout>;
 }
 
 export default PageLayout;

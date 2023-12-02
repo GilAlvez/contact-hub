@@ -1,9 +1,10 @@
 import { IconContext, IconProps } from "@phosphor-icons/react";
 import { useMemo } from "react";
+import { BrowserRouter } from "react-router-dom";
 
-import ContactsList from "./components/ContactsList";
+import Header from "./components/Header";
 import PageLayout from "./components/PageLayout";
-import SearchField from "./components/SearchField";
+import Routes from "./Routes";
 
 function App() {
   const iconValue = useMemo(
@@ -17,12 +18,14 @@ function App() {
   );
 
   return (
-    <IconContext.Provider value={iconValue}>
-      <PageLayout>
-        <SearchField placeholder="Search contact..." />
-        <ContactsList />
-      </PageLayout>
-    </IconContext.Provider>
+    <BrowserRouter>
+      <IconContext.Provider value={iconValue}>
+        <PageLayout>
+          <Header />
+          <Routes />
+        </PageLayout>
+      </IconContext.Provider>
+    </BrowserRouter>
   );
 }
 

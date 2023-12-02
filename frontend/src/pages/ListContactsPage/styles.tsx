@@ -58,7 +58,6 @@ export const ContactCard = styled("div", {
 export const ContactName = styled("h3", {
   base: {
     fontWeight: "black",
-    letterSpacing: "tight",
   },
 });
 
