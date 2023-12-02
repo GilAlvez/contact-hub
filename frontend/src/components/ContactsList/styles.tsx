@@ -23,11 +23,61 @@ export const Link = styled("a", {
     borderWidth: "3px",
     textDecoration: "none",
     fontWeight: "bold",
-    rounded: "sm",
+    rounded: "md",
     transition: "all 0.2s ease-in-out",
     _hover: {
       bg: "primary.main",
       color: "primary.xlighter",
     },
+  },
+});
+
+export const OrderByNameButton = styled("button", {
+  base: {
+    all: "unset",
+    display: "flex",
+    alignItems: "center",
+    mt: "6",
+    mb: "2",
+    gap: "0.5",
+    fontWeight: "bold",
+    color: "primary.main",
+  },
+});
+
+export const ContactCard = styled("div", {
+  base: {
+    w: "full",
+    p: "4",
+    bg: "white",
+    shadow: "sm",
+    rounded: "md",
+  },
+});
+
+export const ContactName = styled("h3", {
+  base: {
+    fontWeight: "black",
+    letterSpacing: "tight",
+  },
+});
+
+export const ContactCategory = styled("small", {
+  base: {
+    bg: "primary.lighter",
+    color: "primary.main",
+    fontSize: "xs",
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    py: "0.5",
+    px: "1",
+    rounded: "sm",
+  },
+});
+
+export const ContactValue = styled("span", {
+  base: {
+    fontSize: "sm",
+    color: "gray.500",
   },
 });

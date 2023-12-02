@@ -42,6 +42,10 @@
     line-height: 1.25;
     }
 
+  button {
+    cursor: pointer;
+    }
+
   @media screen and (min-width: 40em) {
     html, body {
       font-size: 16px;

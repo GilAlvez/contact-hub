@@ -1656,7 +1656,7 @@ const tokens = {
     "variable": "var(--colors-primary-xlighter)"
   },
   "colors.primary.lighter": {
-    "value": "var(--colors-gray-400)",
+    "value": "var(--colors-gray-300)",
     "variable": "var(--colors-primary-lighter)"
   },
   "colors.primary.light": {

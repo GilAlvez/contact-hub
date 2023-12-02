@@ -8,4 +8,7 @@ export default defineGlobalStyles({
     fontFamily: "Sora Variable, sans-serif",
     lineHeight: "1.25",
   },
+  button: {
+    cursor: "pointer",
+  },
 });

@@ -10,8 +10,15 @@ export const SearchField = styled("input", {
     shadow: "sm",
     outline: "0",
     px: "4",
+    transition: "all 0.3s ease-in-out",
     _placeholder: {
       color: "gray.300",
+    },
+    _hover: {
+      shadow: "md",
+    },
+    _focus: {
+      shadow: "md",
     },
   },
 });
