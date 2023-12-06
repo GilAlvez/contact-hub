@@ -1,15 +1,15 @@
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import CreateContactPage from "./pages/CreateContactPage";
 import EditContactPage from "./pages/EditContactPage";
 import ListContactsPage from "./pages/ListContactsPage";
 
-export default function Routes() {
+export default function AppRoutes() {
   return (
-    <Switch>
-      <Route path="/" component={ListContactsPage} exact />
-      <Route path="/new" component={CreateContactPage} />
-      <Route path="/edit/:id" component={EditContactPage} />
-    </Switch>
+    <Routes>
+      <Route path="/" element={<ListContactsPage />} />
+      <Route path="/new" element={<CreateContactPage />} />
+      <Route path="/edit/:id" element={<EditContactPage />} />
+    </Routes>
   );
 }

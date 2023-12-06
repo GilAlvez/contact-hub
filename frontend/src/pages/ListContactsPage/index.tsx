@@ -1,4 +1,5 @@
 import { ArrowUp, NotePencil, TrashSimple } from "@phosphor-icons/react";
+import { Link } from "react-router-dom";
 
 import { HStack, VStack } from "../../../styled-system/jsx";
 import SearchField from "../../components/SearchField";
@@ -13,7 +14,7 @@ function ListContactsPage() {
       <S.Container>
         <HStack justify="space-between">
           <S.PageTitle>0 Contacts</S.PageTitle>
-          <S.Link href="/">New Contact</S.Link>
+          <S.NewContactLink to="/new">New Contact</S.NewContactLink>
         </HStack>
 
         <S.OrderByNameButton>
@@ -35,9 +36,9 @@ function ListContactsPage() {
               </VStack>
 
               <HStack>
-                <a href="/" aria-label="Editar Contato">
+                <Link to="/edit/{id}" aria-label="Editar Contato">
                   <NotePencil />
-                </a>
+                </Link>
 
                 <button type="button" aria-label="Deletar Contato">
                   <TrashSimple />

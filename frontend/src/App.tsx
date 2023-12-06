@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import Header from "./components/Header";
 import PageLayout from "./components/PageLayout";
-import Routes from "./Routes";
+import AppRoutes from "./Routes";
 
 function App() {
   const iconValue = useMemo(
@@ -22,7 +22,7 @@ function App() {
       <IconContext.Provider value={iconValue}>
         <PageLayout>
           <Header />
-          <Routes />
+          <AppRoutes />
         </PageLayout>
       </IconContext.Provider>
     </BrowserRouter>

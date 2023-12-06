@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { styled } from "../../../styled-system/jsx";
 
 export const Container = styled("section", {
@@ -13,7 +15,7 @@ export const PageTitle = styled("h2", {
   },
 });
 
-export const Link = styled("a", {
+export const NewContactLink = styled(Link, {
   base: {
     py: "2",
     px: "4",
