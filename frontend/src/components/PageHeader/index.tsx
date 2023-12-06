@@ -8,12 +8,12 @@ type PageHeaderProps = {
 
 function PageHeader({ title }: PageHeaderProps) {
   return (
-    <div>
+    <S.Container>
       <S.BackLinkButton to="/">
         <ArrowLeft size={18} /> Back
       </S.BackLinkButton>
       <S.HeaderTitle>{title}</S.HeaderTitle>
-    </div>
+    </S.Container>
   );
 }
 
