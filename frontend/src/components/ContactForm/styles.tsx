@@ -11,5 +11,7 @@ export const Form = styled("form", {
 export const ButtonContainer = styled("div", {
   base: {
     mt: 2,
+    display: "flex",
+    flexDirection: "column",
   },
 });
