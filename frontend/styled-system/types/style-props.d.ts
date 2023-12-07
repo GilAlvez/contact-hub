@@ -502,6 +502,8 @@ export interface SystemProperties {
 	strokeWidth?: PropertyValue<'strokeWidth'>
 	textAnchor?: PropertyValue<'textAnchor'>
 	vectorEffect?: PropertyValue<'vectorEffect'>
+	bgca?: PropertyValue<'bgca'>
+	bga?: PropertyValue<'bga'>
 	pos?: PropertyValue<'pos'>
 	insetEnd?: PropertyValue<'insetEnd'>
 	end?: PropertyValue<'end'>
@@ -588,6 +590,7 @@ export interface SystemProperties {
 	shadowColor?: PropertyValue<'shadowColor'>
 	x?: PropertyValue<'x'>
 	y?: PropertyValue<'y'>
+	backgroundColorTransparentize?: PropertyValue<'backgroundColorTransparentize'>
 	insetX?: PropertyValue<'insetX'>
 	insetY?: PropertyValue<'insetY'>
 	hideFrom?: PropertyValue<'hideFrom'>

@@ -24,5 +24,35 @@ export default defineConfig({
       },
     },
   },
+  utilities: {
+    backgroundColorTransparentize: {
+      shorthand: ["bgca", "bga"],
+      property: "backgroundColor",
+      className: "transparentize_bgc",
+      transform: (value, { token }) => {
+        const lastIndex = value?.lastIndexOf("/");
+        if (!lastIndex) {
+          return {};
+        }
+        if (typeof value?.substring !== "function") {
+          return {};
+        }
+        const color = value?.substring(0, lastIndex);
+        if (!color) {
+          return {};
+        }
+        const amount = value.split("/").at(-1);
+        const colorValue = token(`colors.${color}`);
+
+        const opacityValue = token(`opacity.${amount}`);
+        const amountValue = opacityValue
+          ? 100 - (opacityValue as any) * 100
+          : 100 - Number(amount);
+        return {
+          backgroundColor: `color-mix(in srgb, transparent ${amountValue}%, ${colorValue})`,
+        };
+      },
+    },
+  },
   outdir: "styled-system",
 });

@@ -4,6 +4,7 @@ import type { CssProperties } from './system-types';
 import type { Tokens } from '../tokens/index';
 
 interface PropertyValueTypes {
+	backgroundColorTransparentize: CssProperties["backgroundColor"];
 	aspectRatio: "auto" | "square" | "landscape" | "portrait" | "wide" | "ultrawide" | "golden";
 	zIndex: Tokens["zIndex"];
 	top: Tokens["spacing"];
@@ -214,6 +215,8 @@ interface PropertyValueTypes {
 
   export interface PropertyTypes extends PropertyValueTypes {
   
+	bgca: Shorthand<"backgroundColorTransparentize">;
+	bga: Shorthand<"backgroundColorTransparentize">;
 	pos: Shorthand<"position">;
 	insetEnd: Shorthand<"insetInlineEnd">;
 	end: Shorthand<"insetInlineEnd">;
