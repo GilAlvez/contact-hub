@@ -2,8 +2,8 @@ import { styled } from "../../styled-system/jsx";
 
 export const Button = styled("button", {
   base: {
-    w: "full",
     h: "12",
+    px: "4",
     bg: "primary.main",
     color: "white",
     border: "none",
