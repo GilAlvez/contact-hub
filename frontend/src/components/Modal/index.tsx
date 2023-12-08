@@ -1,3 +1,5 @@
+import ReactDOM from "react-dom";
+
 import { Button } from "../Button";
 
 import * as S from "./styles";
@@ -7,7 +9,13 @@ type ModalProps = {
 };
 
 export default function Modal({ danger = false }: ModalProps) {
-  return (
+  const element = document.getElementById("modal-portal");
+
+  if (!element) {
+    throw new Error("Modal Portal element NOT FOUND");
+  }
+
+  return ReactDOM.createPortal(
     <S.Overlay>
       <S.Box>
         <S.Title danger={danger}>
@@ -23,6 +31,7 @@ export default function Modal({ danger = false }: ModalProps) {
           </Button>
         </S.Footer>
       </S.Box>
-    </S.Overlay>
+    </S.Overlay>,
+    element,
   );
 }
