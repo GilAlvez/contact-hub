@@ -26,4 +26,17 @@ export const Button = styled("button", {
       cursor: "default",
     },
   },
+  variants: {
+    danger: {
+      true: {
+        bg: "red.500",
+        _hover: {
+          bg: "red.400",
+        },
+        _active: {
+          bg: "red.600",
+        },
+      },
+    },
+  },
 });

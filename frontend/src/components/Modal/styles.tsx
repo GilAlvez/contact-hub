@@ -34,6 +34,12 @@ export const Title = styled("h2", {
   base: {
     fontSize: "lg",
     fontWeight: "bold",
+    w: "3/4",
+  },
+  variants: {
+    danger: {
+      true: { color: "red.500" },
+    },
   },
 });
 
