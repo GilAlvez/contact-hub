@@ -12,8 +12,8 @@ export type ContactFormProps = {
 export default function ContactForm({ submitLabel }: ContactFormProps) {
   return (
     <S.Form>
-      <FormGroup>
-        <TextField placeholder="Name" />
+      <FormGroup error="O formato está incorreto">
+        <TextField placeholder="Name" danger />
       </FormGroup>
 
       <FormGroup>

@@ -2,7 +2,6 @@ import { ArrowUp, NotePencil, TrashSimple } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
 
 import { HStack, VStack } from "../../../styled-system/jsx";
-import Modal from "../../components/Modal";
 import SearchField from "../../components/SearchField";
 
 import * as S from "./styles";
@@ -10,7 +9,8 @@ import * as S from "./styles";
 function ListContactsPage() {
   return (
     <>
-      <Modal danger />
+      {/* <PageLoading /> */}
+      {/* <Modal danger /> */}
       <SearchField placeholder="Search contact..." />
 
       <S.Container>

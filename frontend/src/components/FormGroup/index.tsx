@@ -4,8 +4,14 @@ import * as S from "./styles";
 
 type FormGroupProps = {
   children: ReactNode;
+  error?: string;
 };
 
-export default function FormGroup({ children }: FormGroupProps) {
-  return <S.Container>{children}</S.Container>;
+export default function FormGroup({ error, children }: FormGroupProps) {
+  return (
+    <S.Container>
+      {children}
+      {error && <S.Error>{error}</S.Error>}
+    </S.Container>
+  );
 }

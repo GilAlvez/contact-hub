@@ -15,4 +15,12 @@ export const TextField = styled("input", {
       border: "2px solid black",
     },
   },
+  variants: {
+    danger: {
+      true: {
+        color: "red.500",
+        borderColor: "red.500!",
+      },
+    },
+  },
 });
