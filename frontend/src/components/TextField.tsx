@@ -16,7 +16,7 @@ export const TextField = styled("input", {
     },
   },
   variants: {
-    danger: {
+    error: {
       true: {
         color: "red.500",
         borderColor: "red.500!",

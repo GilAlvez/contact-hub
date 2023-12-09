@@ -15,4 +15,12 @@ export const Select = styled("select", {
       border: "2px solid black",
     },
   },
+  variants: {
+    error: {
+      true: {
+        color: "red.500",
+        borderColor: "red.500!",
+      },
+    },
+  },
 });
