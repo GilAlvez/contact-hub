@@ -8,13 +8,20 @@ import express, {
 export default abstract class Middleware {
   static json = express.json();
 
+  static CORS = (req: Request, res: Response, next: NextFunction) => {
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.setHeader("Access-Control-Allow-Methods", "*");
+    res.setHeader("Access-Control-Allow-Headers", "*");
+    res.setHeader("Access-Control-Max-Age", "15");
+    next();
+  };
+
   static errorHandler = (
     err: ErrorRequestHandler,
     req: Request,
     res: Response,
     next: NextFunction,
   ) => {
-    console.log("HELLO");
     res.sendStatus(500);
   };
 }

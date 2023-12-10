@@ -6,6 +6,7 @@ import router from "./routes";
 const PORT = 3001;
 const server = express();
 
+server.use(Middleware.CORS);
 server.use(Middleware.json);
 server.use(router);
 server.use(Middleware.errorHandler);
