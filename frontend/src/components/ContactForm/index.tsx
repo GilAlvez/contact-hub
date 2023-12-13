@@ -21,12 +21,8 @@ type CreateContactFields = {
   category?: string;
 };
 
-const DEFAULT_VALUES: CreateContactFields = {
-  name: "",
-};
-
 export default function ContactForm({ submitLabel }: ContactFormProps) {
-  const [data, setData] = useState<CreateContactFields>(DEFAULT_VALUES);
+  const [data, setData] = useState<CreateContactFields>({ name: "" });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { errors, validate, resetErrors } = useFormValidation<CreateContactFields>();
 
