@@ -2,7 +2,13 @@ import ReactDOM from "react-dom";
 
 import * as S from "./styles";
 
-export default function PageLoading() {
+type PageLoadingProps = {
+  active: boolean;
+};
+
+export default function PageLoading({ active }: PageLoadingProps) {
+  if (!active) return null;
+
   const element = document.getElementById("page-loading-portal");
 
   if (!element) {
