@@ -6,7 +6,7 @@ export const Overlay = styled("div", {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    position: "absolute",
+    position: "fixed",
     w: "full",
     h: "full",
     left: "0",
