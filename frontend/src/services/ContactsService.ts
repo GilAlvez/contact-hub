@@ -8,9 +8,7 @@ class ContactService {
   http: HttpClient;
 
   async list(orderBy: "ASC" | "DESC" = "ASC") {
-    const { json } = await this.http.get(`/contacts?orderBy=${orderBy}`);
-
-    return json();
+    return this.http.get(`/contacts?orderBy=${orderBy}`);
   }
 }
 
