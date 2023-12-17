@@ -6,8 +6,6 @@ import express, {
 } from "express";
 
 export default abstract class Middleware {
-  static json = express.json();
-
   static CORS = (req: Request, res: Response, next: NextFunction) => {
     res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
     res.setHeader("Access-Control-Allow-Methods", "*");
@@ -16,12 +14,15 @@ export default abstract class Middleware {
     next();
   };
 
+  static json = express.json();
+
   static errorHandler = (
     err: ErrorRequestHandler,
     req: Request,
     res: Response,
     next: NextFunction,
   ) => {
+    console.log(res);
     res.sendStatus(500);
   };
 }

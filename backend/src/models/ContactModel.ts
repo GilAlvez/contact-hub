@@ -10,7 +10,7 @@ export const ContactModel = z.object({
   }),
   email: z.string().email().trim(),
   phone: z.string().min(6).max(14),
-  category_id: z.string().uuid(),
+  category_id: z.string().uuid().optional(),
 });
 
 export type Contact = z.infer<typeof ContactModel>;

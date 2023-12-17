@@ -44,7 +44,7 @@ class ContactRepository implements IContactRepository {
   async create({ name, email, phone, category_id }: NewContact) {
     const [row] = await db.query<Contact>`
       INSERT INTO contacts(name, email, phone, category_id)
-      VALUES(${name}, ${email}, ${phone} ${category_id})
+      VALUES(${name}, ${email}, ${phone}, ${category_id})
       RETURNING *
     `;
 
