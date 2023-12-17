@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { z } from "zod";
 
 import { ContactModel } from "../models/ContactModel";
 import { NewContactModel } from "../models/NewContactModel";
@@ -20,9 +21,17 @@ export default abstract class ContactController {
   static async show(req: Request, res: Response): Promise<void> {
     // Data
     const { id } = req.params;
-    const contact = await ContactRepository.findById(id);
 
     // Validation
+    const error = validateModel(z.string().uuid(), id);
+
+    if (error) {
+      res.status(400).json(error);
+      return;
+    }
+
+    const contact = await ContactRepository.findById(id);
+
     if (!contact) {
       res.status(404).json({ error: "Not found" });
       return;
@@ -109,6 +118,13 @@ export default abstract class ContactController {
     const { id } = req.params;
 
     // Validation
+    const error = validateModel(z.string().uuid(), id);
+
+    if (error) {
+      res.status(400).json(error);
+      return;
+    }
+
     const contact = await ContactRepository.findById(id);
 
     if (!contact) {

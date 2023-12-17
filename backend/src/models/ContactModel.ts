@@ -8,8 +8,8 @@ export const ContactModel = z.object({
     message:
       "Must contain only letter characters from any language (e.g: Arabic, Kanji...) and no numbers or special symbols.",
   }),
-  email: z.string().email().trim(),
-  phone: z.string().min(6).max(14),
+  email: z.string().email().trim().optional(),
+  phone: z.string().min(6).max(14).optional(),
   category_id: z.string().uuid().optional(),
 });
 
