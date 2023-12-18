@@ -7,11 +7,42 @@ export default class HttpClient {
 
   baseUrl: string;
 
-  async get(path: string) {
-    const response = await fetch(`${this.baseUrl}${path}`);
+  get(path: string, options?: RequestInit) {
+    return this.req(path, {
+      method: "GET",
+      ...options,
+    });
+  }
+
+  post(path: string, options?: RequestInit) {
+    return this.req(path, {
+      method: "POST",
+      ...options,
+    });
+  }
+
+  /* global RequestInit */
+  private async req(path: string, options?: RequestInit) {
+    const headers = new Headers();
+
+    if (options?.body) {
+      headers.append("Content-Type", "application/json");
+    }
+
+    if (options?.headers) {
+      Object.entries(options.headers).forEach(([name, value]) => {
+        headers.append(name, value);
+      });
+    }
+
+    const response = await fetch(`${this.baseUrl}${path}`, {
+      method: options?.method,
+      body: JSON.stringify(options?.body),
+      headers,
+    });
 
     let body = null;
-    const contentType = response.headers.get("content-type");
+    const contentType = response.headers.get("Content-Type");
 
     if (contentType?.includes("json")) {
       body = await response.json();
