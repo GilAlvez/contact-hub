@@ -2,6 +2,7 @@ import { styled } from "../../styled-system/jsx";
 
 export const Select = styled("select", {
   base: {
+    appearance: "none",
     w: "full",
     bg: "white",
     h: "12",
@@ -13,6 +14,9 @@ export const Select = styled("select", {
     transition: "all 0.15s ease-in-out",
     _focus: {
       border: "2px solid black",
+    },
+    _disabled: {
+      bg: "gray.100",
     },
   },
   variants: {
