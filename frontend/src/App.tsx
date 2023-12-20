@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import Header from "./components/Header";
 import PageLayout from "./components/PageLayout";
+import ToastContainer from "./components/Toast/ToastContainer";
 import AppRoutes from "./Routes";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
   return (
     <BrowserRouter>
       <IconContext.Provider value={iconValue}>
+        <ToastContainer />
         <PageLayout>
           <Header />
           <AppRoutes />

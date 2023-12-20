@@ -82,3 +82,55 @@ export const ContactValue = styled("span", {
     color: "gray.500",
   },
 });
+
+export const ErrorContainer = styled("div", {
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "2",
+    mt: "12",
+  },
+});
+
+export const ErrorMessage = styled("h2", {
+  base: {
+    textAlign: "center",
+    fontSize: "xl",
+    color: "red.500",
+  },
+});
+
+export const EmptyListContainer = styled("div", {
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    w: "3/4",
+    mt: "12",
+    mx: "auto",
+    gap: "2",
+    textAlign: "center",
+    color: "primary.light",
+  },
+});
+
+export const EmptyListCTA = styled("strong", {
+  base: {
+    color: "primary.main",
+  },
+});
+
+export const SearchNotFoundContainer = styled("div", {
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    w: "3/4",
+    mt: "12",
+    mx: "auto",
+    gap: "2",
+    textAlign: "center",
+    color: "primary.light",
+  },
+});

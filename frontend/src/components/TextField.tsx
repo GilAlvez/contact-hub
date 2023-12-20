@@ -14,6 +14,9 @@ export const TextField = styled("input", {
     _focus: {
       border: "2px solid black",
     },
+    _disabled: {
+      bg: "gray.100",
+    },
   },
   variants: {
     error: {

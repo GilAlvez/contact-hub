@@ -1,9 +1,6 @@
-import { AnyZodObject } from "zod";
+import { ZodSchema } from "zod";
 
-export default function validateModel<T = unknown>(
-  schema: AnyZodObject,
-  data: T,
-) {
+export default function validateModel<T = unknown>(schema: ZodSchema, data: T) {
   const validation = schema.safeParse(data);
   if (!validation.success) {
     return {
