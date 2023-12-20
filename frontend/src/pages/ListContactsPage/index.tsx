@@ -11,18 +11,26 @@ import { Link } from "react-router-dom";
 
 import { HStack, VStack } from "../../../styled-system/jsx";
 import { Button } from "../../components/Button";
+import { ContactFields } from "../../components/ContactForm";
+import Modal from "../../components/Modal";
 import PageLoading from "../../components/PageLoading";
 import SearchField from "../../components/SearchField";
+import toast from "../../components/Toast/toast";
 import ContactsService from "../../services/ContactsService";
 
 import * as S from "./styles";
 
+type ContactItem = ContactFields & { id: string; category_name?: string };
+
 function ListContactsPage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [orderByName, setOrderByName] = useState<"ASC" | "DESC">("ASC");
-  const [contacts, setContacts] = useState<any[]>([]);
+  const [contacts, setContacts] = useState<ContactItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+  const [isDeleteModalVisible, setisDeleteModalVisible] = useState(false);
+  const [contactBeingDeleted, setContactBeingDeleted] = useState<ContactItem | null>(null);
 
   const filteredContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -59,9 +67,46 @@ function ListContactsPage() {
     fetchContacts();
   }
 
+  async function onConfirmDeleteContact() {
+    setIsLoadingDelete(true);
+    try {
+      await ContactsService.delete(contactBeingDeleted!.id);
+
+      setContacts((prevState) =>
+        prevState.filter((contact) => contact.id !== contactBeingDeleted!.id),
+      );
+      setisDeleteModalVisible(false);
+      setContactBeingDeleted(null);
+
+      toast({
+        variant: "success",
+        title: "Contact deleted successfully",
+      });
+    } catch {
+      toast({
+        variant: "danger",
+        title: "An error occurred while deleting the contact",
+      });
+    } finally {
+      setIsLoadingDelete(false);
+    }
+  }
+
   return (
     <>
       <PageLoading active={isLoading} />
+
+      <Modal
+        danger
+        visible={isDeleteModalVisible}
+        isLoading={isLoadingDelete}
+        title={`Are you sure you want to remove the ${contactBeingDeleted?.name} contact?`}
+        confirmLabel="Delete"
+        onConfirm={onConfirmDeleteContact}
+        onCancel={() => setisDeleteModalVisible(false)}
+      >
+        This action cannot be undone!
+      </Modal>
 
       {contacts.length > 0 && (
         <SearchField
@@ -138,7 +183,14 @@ function ListContactsPage() {
                             <NotePencil />
                           </Link>
 
-                          <button type="button" aria-label="Deletar Contato">
+                          <button
+                            type="button"
+                            aria-label="Deletar Contato"
+                            onClick={() => {
+                              setisDeleteModalVisible(true);
+                              setContactBeingDeleted(contact);
+                            }}
+                          >
                             <TrashSimple />
                           </button>
                         </HStack>

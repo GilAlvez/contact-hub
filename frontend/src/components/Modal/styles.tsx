@@ -61,5 +61,8 @@ export const CancelButton = styled("button", {
   base: {
     pr: "2",
     color: "gray.400",
+    _disabled: {
+      cursor: "not-allowed",
+    },
   },
 });
