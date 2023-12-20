@@ -5,9 +5,11 @@ import ContactForm, { ContactFields, ContactFormRef } from "../../components/Con
 import PageHeader from "../../components/PageHeader";
 import PageLoading from "../../components/PageLoading";
 import toast from "../../components/Toast/toast";
+import useMountedSafeAction from "../../hooks/useSafeAsyncAction";
 import ContactsService from "../../services/ContactsService";
 
 function EditContactPage() {
+  const executeIfMounted = useMountedSafeAction();
   const [contactName, setContactName] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const contactFormRef = useRef<ContactFormRef | null>(null);
@@ -21,9 +23,11 @@ function EditContactPage() {
     try {
       const contact = await ContactsService.unique(id);
 
-      contactFormRef.current?.setFieldsValues(contact);
-      setIsLoading(false);
-      setContactName(contact.name);
+      executeIfMounted(() => {
+        contactFormRef.current?.setFieldsValues(contact);
+        setIsLoading(false);
+        setContactName(contact.name);
+      });
     } catch {
       navigate("/");
       toast({
@@ -31,7 +35,7 @@ function EditContactPage() {
         title: "Contact not found",
       });
     }
-  }, [navigate, id]);
+  }, [id, navigate, executeIfMounted]);
 
   useEffect(() => {
     fetchContact();
