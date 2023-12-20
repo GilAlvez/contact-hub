@@ -1,4 +1,4 @@
-import { CreateContactFields } from "../components/ContactForm";
+import { ContactFields } from "../components/ContactForm";
 import HttpClient from "../libs/HttpClient";
 
 class ContactsService {
@@ -16,8 +16,16 @@ class ContactsService {
     return this.http.get(`/contacts/${id}`);
   }
 
-  create(contact: CreateContactFields) {
+  create(contact: ContactFields) {
     return this.http.post("/contacts", { body: JSON.stringify(contact) });
+  }
+
+  update(id: string, contact: ContactFields) {
+    return this.http.put(`/contacts/${id}`, { body: JSON.stringify(contact) });
+  }
+
+  delete(id: string) {
+    return this.http.delete(`/contacts/${id}`);
   }
 }
 

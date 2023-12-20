@@ -21,6 +21,20 @@ export default class HttpClient {
     });
   }
 
+  put(path: string, options?: RequestInit) {
+    return this.req(path, {
+      method: "PUT",
+      ...options,
+    });
+  }
+
+  delete(path: string, options?: RequestInit) {
+    return this.req(path, {
+      method: "DELETE",
+      ...options,
+    });
+  }
+
   /* global RequestInit */
   private async req(path: string, options?: RequestInit) {
     const headers = new Headers();
