@@ -1,4 +1,5 @@
 import HttpClient from "../libs/HttpClient";
+import CategoryMapper from "../mappers/CategoryMapper";
 
 class CategoriesService {
   constructor() {
@@ -8,7 +9,9 @@ class CategoriesService {
   http: HttpClient;
 
   async list() {
-    return this.http.get("/categories");
+    const categories = await this.http.get("/categories");
+
+    return categories.map(CategoryMapper.toDomain);
   }
 }
 

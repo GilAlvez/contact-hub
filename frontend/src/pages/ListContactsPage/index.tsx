@@ -20,7 +20,7 @@ import ContactsService from "../../services/ContactsService";
 
 import * as S from "./styles";
 
-type ContactItem = ContactFields & { id: string; category_name?: string };
+type ContactItem = ContactFields & { id: string; categoryName?: string };
 
 function ListContactsPage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -169,8 +169,8 @@ function ListContactsPage() {
                         <VStack gap={1} alignItems="start">
                           <HStack gap={2}>
                             <S.ContactName>{contact.name}</S.ContactName>
-                            {contact.category_name && (
-                              <S.ContactCategory>{contact.category_name}</S.ContactCategory>
+                            {contact.categoryName && (
+                              <S.ContactCategory>{contact.categoryName}</S.ContactCategory>
                             )}
                           </HStack>
 

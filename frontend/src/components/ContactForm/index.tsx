@@ -21,6 +21,7 @@ import { TextField } from "../TextField";
 import * as S from "./styles";
 
 export type ContactFields = {
+  id?: string;
   name: string;
   email?: string;
   phone?: string;
@@ -47,8 +48,6 @@ const ContactForm = forwardRef(
     const [isLoadingCategories, setIsLoadingCategories] = useState<boolean>(true);
     const { errors, validate, resetErrors } = useFormValidation<ContactFields>();
 
-    console.log(ref);
-
     const fetchContacts = useCallback(async () => {
       setIsLoadingCategories(true);
       try {
@@ -69,7 +68,7 @@ const ContactForm = forwardRef(
             name: contact.name,
             category: contact.category ?? "",
             email: contact.email ?? "",
-            phone: formatBrazilianPhone(contact.phone ?? ""),
+            phone: contact.phone ?? "",
           });
         },
         resetForm: () => {

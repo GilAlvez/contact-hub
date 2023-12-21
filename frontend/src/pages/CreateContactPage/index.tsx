@@ -8,14 +8,7 @@ import ContactsService from "../../services/ContactsService";
 function CreateContactPage() {
   const contactFormRef = useRef<ContactFormRef>(null);
 
-  async function onSubmit(data: ContactFields) {
-    const contact = {
-      name: data.name,
-      email: data.email,
-      phone: data.phone?.replace(/\D/g, ""),
-      category_id: data.category,
-    };
-
+  async function onSubmit(contact: ContactFields) {
     try {
       await ContactsService.create(contact);
 
