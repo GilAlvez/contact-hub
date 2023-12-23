@@ -1,7 +1,7 @@
 import ContactForm from "../../components/ContactForm";
 import PageHeader from "../../components/PageHeader";
 
-import { useCreateContact } from "./useCreateContact";
+import { useCreateContact } from "./hooks/useCreateContact";
 
 function CreateContactPage() {
   const { contactFormRef, onSubmit } = useCreateContact();

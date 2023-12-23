@@ -2,7 +2,7 @@ import ContactForm from "../../components/ContactForm";
 import PageHeader from "../../components/PageHeader";
 import PageLoading from "../../components/PageLoading";
 
-import { useEditContact } from "./useEditContact";
+import { useEditContact } from "./hooks/useEditContact";
 
 function EditContactPage() {
   const { isLoading, contactName, contactFormRef, onSubmit } = useEditContact();

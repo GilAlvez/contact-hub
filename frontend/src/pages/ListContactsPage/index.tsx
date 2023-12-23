@@ -1,21 +1,14 @@
-import {
-  ArrowDown,
-  ArrowUp,
-  NotePencil,
-  Package,
-  TrashSimple,
-  WarningCircle,
-} from "@phosphor-icons/react";
-import { Link } from "react-router-dom";
-
-import { HStack, VStack } from "../../../styled-system/jsx";
-import { Button } from "../../components/Button";
 import Modal from "../../components/Modal";
 import PageLoading from "../../components/PageLoading";
-import SearchField from "../../components/SearchField";
 
+import ContactsList from "./components/ContactsList";
+import EmptyList from "./components/EmptyList";
+import ErrorStatus from "./components/ErrorStatus";
+import Header from "./components/Header";
+import SearchField from "./components/SearchField";
+import SearchNotFound from "./components/SearchNotFound";
+import { useListContacts } from "./hooks/useListContacts";
 import * as S from "./styles";
-import { useListContacts } from "./useListContacts";
 
 function ListContactsPage() {
   const {
@@ -36,12 +29,46 @@ function ListContactsPage() {
     onSearchFieldChange,
   } = useListContacts();
 
-  // eslint-disable-next-line no-nested-ternary
-  const headerAlignment = !hasError && contacts.length > 0 ? "space-between" : "center";
-
   return (
     <>
       <PageLoading active={isLoading} />
+
+      {contacts.length > 0 && (
+        <SearchField
+          placeholder="Search contact..."
+          value={searchTerm}
+          onChange={onSearchFieldChange}
+        />
+      )}
+
+      <S.Container>
+        <Header
+          hasError={hasError}
+          contactsQuantity={contacts.length}
+          filteredContactsQuantity={filteredContacts.length}
+        />
+
+        {hasError && <ErrorStatus onRetry={retry} />}
+
+        {!hasError && (
+          <>
+            {contacts.length < 1 && !isLoading && <EmptyList />}
+
+            {contacts.length > 0 && filteredContacts.length < 1 && (
+              <SearchNotFound searchTerm={searchTerm} />
+            )}
+
+            {filteredContacts.length > 0 && (
+              <ContactsList
+                filteredContacts={filteredContacts}
+                orderByName={orderByName}
+                onOpenDeleteContactModal={onOpenDeleteContactModal}
+                toggleOrderByName={toggleOrderByName}
+              />
+            )}
+          </>
+        )}
+      </S.Container>
 
       <Modal
         danger
@@ -54,99 +81,6 @@ function ListContactsPage() {
       >
         This action cannot be undone!
       </Modal>
-
-      {contacts.length > 0 && (
-        <SearchField
-          placeholder="Search contact..."
-          type="search"
-          value={searchTerm}
-          onChange={onSearchFieldChange}
-        />
-      )}
-
-      <S.Container>
-        <HStack justify={headerAlignment}>
-          {!hasError && contacts.length > 0 && (
-            <S.PageTitle>
-              {filteredContacts.length} {filteredContacts.length === 1 ? "Contact" : "Contacts"}
-            </S.PageTitle>
-          )}
-          <S.NewContactLink to="/new">New Contact</S.NewContactLink>
-        </HStack>
-
-        {hasError && (
-          <S.ErrorContainer>
-            <S.ErrorMessage>An error has occurred</S.ErrorMessage>
-            <Button type="button" onClick={retry} height={8} letterSpacing="widest">
-              RETRY
-            </Button>
-          </S.ErrorContainer>
-        )}
-
-        {!hasError && (
-          <>
-            {contacts.length < 1 && !isLoading && (
-              <S.EmptyListContainer>
-                <Package size={100} weight="thin" />
-                <p>
-                  Empty contacts, click on &quot;<S.EmptyListCTA>New Contact</S.EmptyListCTA>&quot;{" "}
-                  to create your first one
-                </p>
-              </S.EmptyListContainer>
-            )}
-
-            {contacts.length > 0 && filteredContacts.length < 1 && (
-              <S.SearchNotFoundContainer>
-                <WarningCircle />
-                <span>Results not found to &quot;{searchTerm}&quot;</span>
-              </S.SearchNotFoundContainer>
-            )}
-
-            {filteredContacts.length > 0 && (
-              <>
-                <S.OrderByNameButton onClick={toggleOrderByName}>
-                  Nome
-                  {orderByName === "ASC" ? <ArrowDown size={18} /> : <ArrowUp size={18} />}
-                </S.OrderByNameButton>
-
-                <VStack gap={4}>
-                  {filteredContacts.map((contact) => (
-                    <S.ContactCard key={contact.id}>
-                      <HStack justify="space-between">
-                        <VStack gap={1} alignItems="start">
-                          <HStack gap={2}>
-                            <S.ContactName>{contact.name}</S.ContactName>
-                            {contact.categoryName && (
-                              <S.ContactCategory>{contact.categoryName}</S.ContactCategory>
-                            )}
-                          </HStack>
-
-                          <S.ContactValue>{contact.email}</S.ContactValue>
-                          <S.ContactValue>{contact.phone}</S.ContactValue>
-                        </VStack>
-
-                        <HStack>
-                          <Link to={`/edit/${contact.id}`} aria-label="Editar Contato">
-                            <NotePencil />
-                          </Link>
-
-                          <button
-                            type="button"
-                            aria-label="Deletar Contato"
-                            onClick={() => onOpenDeleteContactModal(contact)}
-                          >
-                            <TrashSimple />
-                          </button>
-                        </HStack>
-                      </HStack>
-                    </S.ContactCard>
-                  ))}
-                </VStack>
-              </>
-            )}
-          </>
-        )}
-      </S.Container>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { styled } from "../../../styled-system/jsx";
+import { styled } from "../../../../../styled-system/jsx";
 
 export const SearchField = styled("input", {
   base: {

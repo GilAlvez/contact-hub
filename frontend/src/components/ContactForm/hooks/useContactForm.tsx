@@ -8,10 +8,10 @@ import {
   useState,
 } from "react";
 
-import useFormValidation from "../../hooks/useFormValidation";
-import CategoriesService from "../../services/CategoriesService";
-import formatBrazilianPhone from "../../utils/formatPhone";
-import isEmailValid from "../../utils/validateEmail";
+import useFormValidation from "../../../hooks/useFormValidation";
+import CategoriesService from "../../../services/CategoriesService";
+import formatBrazilianPhone from "../../../utils/formatPhone";
+import isEmailValid from "../../../utils/validateEmail";
 
 export type ContactFields = {
   id?: string;

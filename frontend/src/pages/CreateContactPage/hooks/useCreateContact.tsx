@@ -1,8 +1,8 @@
 import { useRef } from "react";
 
-import { ContactFields, ContactFormRef } from "../../components/ContactForm";
-import toast from "../../components/Toast/toast";
-import ContactsService from "../../services/ContactsService";
+import { ContactFields, ContactFormRef } from "../../../components/ContactForm";
+import toast from "../../../components/Toast/toast";
+import ContactsService from "../../../services/ContactsService";
 
 export function useCreateContact() {
   const contactFormRef = useRef<ContactFormRef>(null);

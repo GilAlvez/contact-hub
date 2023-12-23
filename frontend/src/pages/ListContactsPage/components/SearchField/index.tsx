@@ -1,4 +1,4 @@
-import { HTMLStyledProps } from "../../../styled-system/types";
+import { HTMLStyledProps } from "../../../../../styled-system/types";
 
 import * as S from "./styles";
 

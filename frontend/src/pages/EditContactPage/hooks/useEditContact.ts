@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { ContactFields, ContactFormRef } from "../../components/ContactForm";
-import toast from "../../components/Toast/toast";
-import useMountedSafeAction from "../../hooks/useSafeAsyncAction";
-import ContactsService from "../../services/ContactsService";
+import { ContactFields, ContactFormRef } from "../../../components/ContactForm";
+import toast from "../../../components/Toast/toast";
+import useMountedSafeAction from "../../../hooks/useSafeAsyncAction";
+import ContactsService from "../../../services/ContactsService";
 
 export function useEditContact() {
   const executeIfMounted = useMountedSafeAction();

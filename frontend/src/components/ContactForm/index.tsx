@@ -5,8 +5,8 @@ import FormGroup from "../FormGroup";
 import { Select } from "../Select";
 import { TextField } from "../TextField";
 
+import { useContactForm } from "./hooks/useContactForm";
 import * as S from "./styles";
-import { useContactForm } from "./useContactForm";
 
 export type ContactFields = {
   id?: string;

@@ -1,10 +1,10 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
-import { ContactFields } from "../../components/ContactForm";
-import toast from "../../components/Toast/toast";
-import ContactsService from "../../services/ContactsService";
+import { ContactFields } from "../../../components/ContactForm";
+import toast from "../../../components/Toast/toast";
+import ContactsService from "../../../services/ContactsService";
 
-type ContactItem = ContactFields & { id: string; categoryName?: string };
+export type ContactItem = ContactFields & { id: string; categoryName?: string };
 
 export function useListContacts() {
   const [searchTerm, setSearchTerm] = useState<string>("");
