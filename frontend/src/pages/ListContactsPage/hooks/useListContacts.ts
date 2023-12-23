@@ -28,6 +28,7 @@ export function useListContacts() {
       setContacts(response);
     } catch (e) {
       setHasError(true);
+      setContacts([]);
     } finally {
       setIsLoading(false);
     }

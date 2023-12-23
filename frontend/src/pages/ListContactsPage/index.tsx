@@ -29,11 +29,15 @@ function ListContactsPage() {
     onSearchFieldChange,
   } = useListContacts();
 
+  const hasContacts = contacts.length > 0;
+  const isListEmpty = !hasError && !isLoading && !hasContacts;
+  const isSearchResultEmpty = !hasError && hasContacts && filteredContacts.length < 1;
+
   return (
     <>
       <PageLoading active={isLoading} />
 
-      {contacts.length > 0 && (
+      {hasContacts && (
         <SearchField
           placeholder="Search contact..."
           value={searchTerm}
@@ -49,24 +53,16 @@ function ListContactsPage() {
         />
 
         {hasError && <ErrorStatus onRetry={retry} />}
+        {isSearchResultEmpty && <SearchNotFound searchTerm={searchTerm} />}
+        {isListEmpty && <EmptyList />}
 
-        {!hasError && (
-          <>
-            {contacts.length < 1 && !isLoading && <EmptyList />}
-
-            {contacts.length > 0 && filteredContacts.length < 1 && (
-              <SearchNotFound searchTerm={searchTerm} />
-            )}
-
-            {filteredContacts.length > 0 && (
-              <ContactsList
-                filteredContacts={filteredContacts}
-                orderByName={orderByName}
-                onOpenDeleteContactModal={onOpenDeleteContactModal}
-                toggleOrderByName={toggleOrderByName}
-              />
-            )}
-          </>
+        {hasContacts && (
+          <ContactsList
+            filteredContacts={filteredContacts}
+            orderByName={orderByName}
+            onOpenDeleteContactModal={onOpenDeleteContactModal}
+            toggleOrderByName={toggleOrderByName}
+          />
         )}
       </S.Container>
 
