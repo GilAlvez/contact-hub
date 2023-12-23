@@ -13,6 +13,7 @@ export const Overlay = styled("div", {
     top: "0",
     p: "4",
     backdropFilter: "blur(2px)",
+    animation: "fadein 0.3s",
   },
 });
 
@@ -27,6 +28,7 @@ export const Box = styled("div", {
     shadow: "lg",
     w: "full",
     maxW: "md",
+    animation: "scalein 0.3s",
   },
 });
 
