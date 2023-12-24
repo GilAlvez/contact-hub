@@ -17,7 +17,7 @@ export default abstract class ContactMapper {
       id: persistenceContact.id,
       name: persistenceContact.name,
       email: persistenceContact.email,
-      phone: formatBrazilianPhone(persistenceContact.phone),
+      phone: persistenceContact.phone && formatBrazilianPhone(persistenceContact.phone),
       category: persistenceContact.category_id,
       categoryName: persistenceContact.category_name,
     };
