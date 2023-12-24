@@ -22,7 +22,7 @@ export default abstract class Middleware {
     res: Response,
     next: NextFunction,
   ) => {
-    console.log(res);
+    console.log(err);
     res.sendStatus(500);
   };
 }
