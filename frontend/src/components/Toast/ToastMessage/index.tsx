@@ -1,5 +1,5 @@
 import { CheckCircle, XCircle } from "@phosphor-icons/react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { ToastProps } from "../ToastContainer";
 
@@ -7,10 +7,30 @@ import * as S from "./styles";
 
 type ToastMessageProps = {
   toast: ToastProps;
+  isLeaving: boolean;
   onRemoveMessage: (id: number) => void;
+  onAnimationEnd: (id: number) => void;
 };
 
-function ToastMessage({ toast, onRemoveMessage }: ToastMessageProps) {
+function ToastMessage({ toast, isLeaving, onRemoveMessage, onAnimationEnd }: ToastMessageProps) {
+  const animatedRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    function handleAnimationEnd() {
+      onAnimationEnd(toast.id);
+    }
+
+    const animatedRefElement = animatedRef.current;
+    if (isLeaving) {
+      animatedRefElement?.addEventListener("animationend", handleAnimationEnd);
+    }
+
+    return () => {
+      if (animatedRefElement) {
+        animatedRefElement.removeEventListener("animationend", handleAnimationEnd);
+      }
+    };
+  }, [isLeaving, onAnimationEnd, toast.id]);
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       onRemoveMessage(toast.id);
@@ -19,7 +39,7 @@ function ToastMessage({ toast, onRemoveMessage }: ToastMessageProps) {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [onRemoveMessage, toast.id, toast.duration]);
+  }, [onRemoveMessage, toast]);
 
   return (
     <S.Container
@@ -27,6 +47,8 @@ function ToastMessage({ toast, onRemoveMessage }: ToastMessageProps) {
       tabIndex={0}
       variant={toast.variant}
       onClick={() => onRemoveMessage(toast.id)}
+      isLeaving={isLeaving}
+      ref={animatedRef}
     >
       {toast.variant === "danger" && <XCircle />}
       {toast.variant === "success" && <CheckCircle />}

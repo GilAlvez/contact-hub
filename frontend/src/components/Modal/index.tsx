@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 
+import useAnimatedUnmount from "../../hooks/useAnimatedUnmount";
 import { Button } from "../Button";
 import ReactPortal from "../ReactPortal";
 
@@ -26,12 +27,14 @@ export default function Modal({
   onConfirm,
   onCancel,
 }: ModalProps) {
-  if (!visible) return null;
+  const { shouldRender, animatedElementRef } = useAnimatedUnmount({ visible });
+
+  if (!shouldRender) return null;
 
   return (
     <ReactPortal portalId="modal-portal">
-      <S.Overlay>
-        <S.Box>
+      <S.Overlay visible={visible} ref={animatedElementRef}>
+        <S.Box visible={visible}>
           <S.Title danger={danger}>{title}</S.Title>
 
           <S.Body>{children}</S.Body>

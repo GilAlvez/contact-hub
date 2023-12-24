@@ -9,7 +9,7 @@ function EditContactPage() {
 
   return (
     <>
-      <PageLoading active={isLoading} />
+      <PageLoading visible={isLoading} />
       <PageHeader title={contactName ? `Edit ${contactName}` : "Loading..."} />
       <ContactForm ref={contactFormRef} onSubmit={onSubmit} submitLabel="Edit" />
     </>

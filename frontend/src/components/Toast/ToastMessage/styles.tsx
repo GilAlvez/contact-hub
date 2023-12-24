@@ -34,6 +34,14 @@ export const Container = styled("div", {
         bg: "red.500",
       },
     },
+    isLeaving: {
+      false: {
+        animation: "messagein 0.3s forwards",
+      },
+      true: {
+        animation: "messageout 0.3s forwards",
+      },
+    },
   },
   defaultVariants: {
     variant: "default",

@@ -64,7 +64,6 @@ export function useListContacts() {
         prevState.filter((contact) => contact.id !== contactBeingDeleted!.id),
       );
       setisDeleteModalVisible(false);
-      setContactBeingDeleted(null);
 
       toast({
         variant: "success",

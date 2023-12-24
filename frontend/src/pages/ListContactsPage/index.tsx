@@ -35,7 +35,7 @@ function ListContactsPage() {
 
   return (
     <>
-      <PageLoading active={isLoading} />
+      <PageLoading visible={isLoading} />
 
       {hasContacts && (
         <SearchField
@@ -70,7 +70,7 @@ function ListContactsPage() {
         danger
         visible={isDeleteModalVisible}
         isLoading={isLoadingDelete}
-        title={`Are you sure you want to remove the ${contactBeingDeleted?.name} contact?`}
+        title={`Are you sure you want to remove the "${contactBeingDeleted?.name}" contact?`}
         confirmLabel="Delete"
         onConfirm={onConfirmDeleteContact}
         onCancel={onCancelDeleteContact}

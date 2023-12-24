@@ -1,17 +1,20 @@
+import useAnimatedUnmount from "../../hooks/useAnimatedUnmount";
 import ReactPortal from "../ReactPortal";
 
 import * as S from "./styles";
 
 type PageLoadingProps = {
-  active: boolean;
+  visible: boolean;
 };
 
-export default function PageLoading({ active }: PageLoadingProps) {
-  if (!active) return null;
+export default function PageLoading({ visible }: PageLoadingProps) {
+  const { shouldRender, animatedElementRef } = useAnimatedUnmount({ visible });
+
+  if (!shouldRender) return null;
 
   return (
     <ReactPortal portalId="page-loading-portal">
-      <S.Overlay>
+      <S.Overlay visible={visible} ref={animatedElementRef}>
         <S.LoadingIcon />
       </S.Overlay>
     </ReactPortal>
