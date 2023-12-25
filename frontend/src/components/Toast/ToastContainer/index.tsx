@@ -18,7 +18,6 @@ function ToastContainer() {
     setItems: setToasts,
     renderItems: renderToasts,
     onRemoveItem,
-    onAnimationEnd,
   } = useAnimatedList<ToastProps>();
 
   useEffect(() => {
@@ -34,13 +33,13 @@ function ToastContainer() {
 
   return (
     <S.Container>
-      {renderToasts((toast, { isLeaving }) => (
+      {renderToasts((toast, { isLeaving, animatedRef }) => (
         <ToastMessage
           key={toast.id}
           toast={toast}
           isLeaving={isLeaving}
+          animatedRef={animatedRef}
           onRemoveMessage={onRemoveItem}
-          onAnimationEnd={onAnimationEnd}
         />
       ))}
     </S.Container>

@@ -1,5 +1,5 @@
 import { CheckCircle, XCircle } from "@phosphor-icons/react";
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect } from "react";
 
 import { ToastProps } from "../ToastContainer";
 
@@ -8,29 +8,11 @@ import * as S from "./styles";
 type ToastMessageProps = {
   toast: ToastProps;
   isLeaving: boolean;
+  animatedRef: RefObject<HTMLDivElement>;
   onRemoveMessage: (id: number) => void;
-  onAnimationEnd: (id: number) => void;
 };
 
-function ToastMessage({ toast, isLeaving, onRemoveMessage, onAnimationEnd }: ToastMessageProps) {
-  const animatedRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    function handleAnimationEnd() {
-      onAnimationEnd(toast.id);
-    }
-
-    const animatedRefElement = animatedRef.current;
-    if (isLeaving) {
-      animatedRefElement?.addEventListener("animationend", handleAnimationEnd);
-    }
-
-    return () => {
-      if (animatedRefElement) {
-        animatedRefElement.removeEventListener("animationend", handleAnimationEnd);
-      }
-    };
-  }, [isLeaving, onAnimationEnd, toast.id]);
-
+function ToastMessage({ toast, isLeaving, animatedRef, onRemoveMessage }: ToastMessageProps) {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       onRemoveMessage(toast.id);
