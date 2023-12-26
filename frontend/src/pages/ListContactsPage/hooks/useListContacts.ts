@@ -20,22 +20,29 @@ export function useListContacts() {
     contact.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const fetchContacts = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await ContactsService.list(orderByName);
-      setHasError(false);
-      setContacts(response);
-    } catch (e) {
-      setHasError(true);
-      setContacts([]);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [orderByName]);
+  const fetchContacts = useCallback(
+    async (signal?: AbortSignal) => {
+      setIsLoading(true);
+      try {
+        const response = await ContactsService.list(signal, orderByName);
+        setHasError(false);
+        setContacts(response);
+      } catch (e) {
+        setHasError(true);
+        setContacts([]);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [orderByName],
+  );
 
   useEffect(() => {
-    fetchContacts();
+    const { signal, abort } = new AbortController();
+    fetchContacts(signal);
+    return () => {
+      abort();
+    };
   }, [fetchContacts]);
 
   function toggleOrderByName() {

@@ -5,6 +5,7 @@ import {
   useCallback,
   useEffect,
   useImperativeHandle,
+  useMemo,
   useState,
 } from "react";
 
@@ -32,7 +33,7 @@ export type ContactFormProps = {
 };
 
 export const useContactForm = ({ ref, onSubmit }: ContactFormProps) => {
-  const defaultValues = { name: "" };
+  const defaultValues = useMemo(() => ({ name: "" }), []);
 
   const [data, setData] = useState<ContactFields>(defaultValues);
   const [categories, setCategories] = useState([]);
@@ -40,10 +41,10 @@ export const useContactForm = ({ ref, onSubmit }: ContactFormProps) => {
   const [isLoadingCategories, setIsLoadingCategories] = useState<boolean>(true);
   const { errors, validate, resetErrors } = useFormValidation<ContactFields>();
 
-  const fetchContacts = useCallback(async () => {
+  const fetchContacts = useCallback(async (signal?: AbortSignal) => {
     setIsLoadingCategories(true);
     try {
-      const response = await CategoriesService.list();
+      const response = await CategoriesService.list(signal);
       setCategories(response);
     } catch (e) {
       console.log(e);
@@ -67,11 +68,15 @@ export const useContactForm = ({ ref, onSubmit }: ContactFormProps) => {
         setData(defaultValues);
       },
     }),
-    [],
+    [defaultValues],
   );
 
   useEffect(() => {
-    fetchContacts();
+    const { signal, abort } = new AbortController();
+    fetchContacts(signal);
+    return () => {
+      abort();
+    };
   }, [fetchContacts]);
 
   function handleFieldsChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {

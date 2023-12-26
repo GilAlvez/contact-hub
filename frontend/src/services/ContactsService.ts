@@ -9,14 +9,14 @@ class ContactsService {
 
   http: HttpClient;
 
-  async list(orderBy: "ASC" | "DESC" = "ASC") {
-    const contacts = await this.http.get(`/contacts?orderBy=${orderBy}`);
+  async list(signal?: AbortSignal, orderBy: "ASC" | "DESC" = "ASC") {
+    const contacts = await this.http.get(`/contacts?orderBy=${orderBy}`, { signal });
 
     return contacts.map(ContactMapper.toDomain);
   }
 
-  async unique(id: string) {
-    const contact = await this.http.get(`/contacts/${id}`);
+  async unique(id: string, signal?: AbortSignal) {
+    const contact = await this.http.get(`/contacts/${id}`, { signal });
 
     return ContactMapper.toDomain(contact);
   }

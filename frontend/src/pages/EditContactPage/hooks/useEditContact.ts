@@ -15,28 +15,35 @@ export function useEditContact() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const fetchContact = useCallback(async () => {
-    if (!id) return;
+  const fetchContact = useCallback(
+    async (signal?: AbortSignal) => {
+      if (!id) return;
 
-    try {
-      const contact = await ContactsService.unique(id);
+      try {
+        const contact = await ContactsService.unique(id, signal);
 
-      executeIfMounted(() => {
-        contactFormRef.current?.setFieldsValues(contact);
-        setIsLoading(false);
-        setContactName(contact.name);
-      });
-    } catch {
-      navigate("/");
-      toast({
-        variant: "danger",
-        title: "Contact not found",
-      });
-    }
-  }, [id, navigate, executeIfMounted]);
+        executeIfMounted(() => {
+          contactFormRef.current?.setFieldsValues(contact);
+          setIsLoading(false);
+          setContactName(contact.name);
+        });
+      } catch {
+        navigate("/");
+        toast({
+          variant: "danger",
+          title: "Contact not found",
+        });
+      }
+    },
+    [id, navigate, executeIfMounted],
+  );
 
   useEffect(() => {
-    fetchContact();
+    const { signal, abort } = new AbortController();
+    fetchContact(signal);
+    return () => {
+      abort();
+    };
   }, [fetchContact]);
 
   async function onSubmit(data: ContactFields) {
