@@ -1,23 +1,22 @@
-import ReactDOM from "react-dom";
+import useAnimatedUnmount from "../../hooks/useAnimatedUnmount";
+import ReactPortal from "../ReactPortal";
 
 import * as S from "./styles";
 
 type PageLoadingProps = {
-  active: boolean;
+  visible: boolean;
 };
 
-export default function PageLoading({ active }: PageLoadingProps) {
-  if (!active) return null;
+export default function PageLoading({ visible }: PageLoadingProps) {
+  const { shouldRender, animatedElementRef } = useAnimatedUnmount({ visible });
 
-  const element = document.getElementById("page-loading-portal");
+  if (!shouldRender) return null;
 
-  if (!element) {
-    throw new Error("PageLoading Portal element NOT FOUND");
-  }
-  return ReactDOM.createPortal(
-    <S.Overlay>
-      <S.LoadingIcon />
-    </S.Overlay>,
-    element,
+  return (
+    <ReactPortal portalId="page-loading-portal">
+      <S.Overlay visible={visible} ref={animatedElementRef}>
+        <S.LoadingIcon />
+      </S.Overlay>
+    </ReactPortal>
   );
 }

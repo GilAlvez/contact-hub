@@ -51,7 +51,8 @@ export default class HttpClient {
 
     const response = await fetch(`${this.baseUrl}${path}`, {
       method: options?.method,
-      body: JSON.stringify(options?.body),
+      body: options?.body,
+      signal: options?.signal,
       headers,
     });
 

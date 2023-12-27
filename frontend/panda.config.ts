@@ -11,6 +11,44 @@ export default defineConfig({
   exclude: [],
   theme: {
     extend: {
+      keyframes: {
+        fadein: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+        fadeout: {
+          from: { opacity: 1 },
+          to: { opacity: 0 },
+        },
+        scalein: {
+          from: { transform: "scale(0.9)" },
+          to: { transform: "scale(1)" },
+        },
+        scaleout: {
+          from: { transform: "scale(1)" },
+          to: { transform: "scale(0.9)" },
+        },
+        messagein: {
+          from: {
+            opacity: 0,
+            transform: "translateY(100px)",
+          },
+          to: {
+            opacity: 1,
+            transform: "translateY(0px)",
+          },
+        },
+        messageout: {
+          from: {
+            opacity: 1,
+            transform: "translateY(0px)",
+          },
+          to: {
+            opacity: 0,
+            transform: "translateY(100px)",
+          },
+        },
+      },
       tokens: {
         colors: {
           primary: {
@@ -45,9 +83,7 @@ export default defineConfig({
         const colorValue = token(`colors.${color}`);
 
         const opacityValue = token(`opacity.${amount}`);
-        const amountValue = opacityValue
-          ? 100 - (opacityValue as any) * 100
-          : 100 - Number(amount);
+        const amountValue = opacityValue ? 100 - (opacityValue as any) * 100 : 100 - Number(amount);
         return {
           backgroundColor: `color-mix(in srgb, transparent ${amountValue}%, ${colorValue})`,
         };

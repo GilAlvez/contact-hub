@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
-import ReactDOM from "react-dom";
 
+import useAnimatedUnmount from "../../hooks/useAnimatedUnmount";
 import { Button } from "../Button";
+import ReactPortal from "../ReactPortal";
 
 import * as S from "./styles";
 
@@ -26,31 +27,28 @@ export default function Modal({
   onConfirm,
   onCancel,
 }: ModalProps) {
-  if (!visible) return null;
+  const { shouldRender, animatedElementRef } = useAnimatedUnmount({ visible });
 
-  const element = document.getElementById("modal-portal");
+  if (!shouldRender) return null;
 
-  if (!element) {
-    throw new Error("Modal Portal element NOT FOUND");
-  }
+  return (
+    <ReactPortal portalId="modal-portal">
+      <S.Overlay visible={visible} ref={animatedElementRef}>
+        <S.Box visible={visible}>
+          <S.Title danger={danger}>{title}</S.Title>
 
-  return ReactDOM.createPortal(
-    <S.Overlay>
-      <S.Box>
-        <S.Title danger={danger}>{title}</S.Title>
+          <S.Body>{children}</S.Body>
 
-        <S.Body>{children}</S.Body>
-
-        <S.Footer>
-          <S.CancelButton type="button" disabled={isLoading} onClick={onCancel}>
-            Cancel
-          </S.CancelButton>
-          <Button danger={danger} disabled={isLoading} type="button" onClick={onConfirm}>
-            {confirmLabel ?? "OK"}
-          </Button>
-        </S.Footer>
-      </S.Box>
-    </S.Overlay>,
-    element,
+          <S.Footer>
+            <S.CancelButton type="button" disabled={isLoading} onClick={onCancel}>
+              Cancel
+            </S.CancelButton>
+            <Button danger={danger} disabled={isLoading} type="button" onClick={onConfirm}>
+              {confirmLabel ?? "OK"}
+            </Button>
+          </S.Footer>
+        </S.Box>
+      </S.Overlay>
+    </ReactPortal>
   );
 }

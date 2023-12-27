@@ -14,6 +14,19 @@ export const Overlay = styled("div", {
     p: "4",
     backdropFilter: "blur(2px)",
   },
+  variants: {
+    visible: {
+      true: {
+        animation: "fadein 0.3s forwards",
+      },
+      false: {
+        animation: "fadeout 0.3s forwards",
+      },
+    },
+  },
+  defaultVariants: {
+    visible: true,
+  },
 });
 
 export const Box = styled("div", {
@@ -27,6 +40,19 @@ export const Box = styled("div", {
     shadow: "lg",
     w: "full",
     maxW: "md",
+  },
+  variants: {
+    visible: {
+      true: {
+        animation: "scalein 0.3s forwards",
+      },
+      false: {
+        animation: "scaleout 0.3s forwards",
+      },
+    },
+  },
+  defaultVariants: {
+    visible: true,
   },
 });
 

@@ -4,7 +4,7 @@ import { styled } from "../../../styled-system/jsx";
 
 export const Overlay = styled("div", {
   base: {
-    bga: "primary.main/30",
+    bga: "black/5",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -14,6 +14,19 @@ export const Overlay = styled("div", {
     left: "0",
     top: "0",
     backdropFilter: "blur(2px)",
+  },
+  variants: {
+    visible: {
+      true: {
+        animation: "fadein 0.3s forwards",
+      },
+      false: {
+        animation: "fadeout 0.3s forwards",
+      },
+    },
+  },
+  defaultVariants: {
+    visible: false,
   },
 });
 

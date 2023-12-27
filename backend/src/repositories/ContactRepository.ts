@@ -13,30 +13,30 @@ class ContactRepository implements IContactRepository {
       orderBy?.toUpperCase() === "DESC" ? { raw: "DESC" } : { raw: "ASC" };
 
     const rows = await db.query<Contact>`
-      SELECT contacts.*, categories.name AS category_name
-      FROM contacts
-      LEFT JOIN categories ON categories.id = contacts.category_id
-      ORDER BY contacts.name ${direction}
-    `;
+        SELECT contacts.*, categories.name AS category_name
+        FROM contacts
+        LEFT JOIN categories ON categories.id = contacts.category_id
+        ORDER BY contacts.name ${direction}
+      `;
 
     return rows;
   }
 
   async findById(id: string) {
     const [row] = await db.query<Contact>`
-      SELECT contact.*, categories.name AS category_name
+      SELECT contacts.*, categories.name AS category_name
       FROM contacts
       LEFT JOIN categories ON categories.id = contacts.category_id
       WHERE contacts.id = ${id}
-    `;
+      `;
 
     return row;
   }
 
   async findByEmail(email: string) {
     const [row] = await db.query<Contact>`
-      SELECT * FROM contacts WHERE email = ${email}
-    `;
+        SELECT * FROM contacts WHERE email = ${email}
+      `;
 
     return row;
   }
@@ -61,8 +61,8 @@ class ContactRepository implements IContactRepository {
 
   async delete(id: string) {
     await db.query`
-      DELETE FROM contacts WHERE id = ${id}
-    `;
+        DELETE FROM contacts WHERE id = ${id}
+      `;
   }
 }
 
